@@ -14,6 +14,7 @@
   "description": "This is a project developed using Javascript, EJS , CSS and Node js for server side",
   "main": "express.js",
   "scripts": {
+    "start": "node express.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
