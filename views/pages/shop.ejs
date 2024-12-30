@@ -1,0 +1,181 @@
+<!-- Shop Page -->
+<div class="text-center mt-5">
+  <h2>Shop with Us</h2>
+  <p>Explore our range of premium products available for purchase.</p>
+
+  <!-- Search Section -->
+  <div class="mb-4">
+    <input type="text" id="searchInput" class="form-control" placeholder="Search for products..." onkeyup="searchProducts()">
+    <button class="btn btn-primary mt-2" onclick="searchProducts()">Search</button>
+  </div>
+
+  <nav class="nav justify-content-center mt-3">
+    <a class="nav-link" href="/shop">ALL</a>
+    <a class="nav-link" href="/trousers">TROUSERS</a>
+    <a class="nav-link" href="/jackets">JACKETS</a>
+    <a class="nav-link" href="/school">SCHOOL</a>
+    <a class="nav-link" href="/male">MALE</a>
+    <a class="nav-link" href="/female">FEMALE</a>
+  </nav>
+
+  <p><b><u>ALL CATEGORIES</u></b></p>
+
+  <div class="row" id="productList">
+    <!-- Product 1 -->
+    <div class="col-md-4 mb-4 product-item">
+      <div class="card">
+        <img src="assets/images/femaletrouser.jpg" class="card-img-top" alt="Female Office Trouser">
+        <div class="card-body text-center">
+          <h5 class="card-title">Female Office Trouser</h5>
+          <p class="card-text">Lightweight and breathable trousers for office wear.</p>
+          <p class="text-danger">KSh 1,800</p>
+          <button class="btn btn-primary add-to-cart" data-id="1" data-name="Female Office Trouser" data-price="1800">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="col-md-4 mb-4 product-item">
+      <div class="card">
+        <img src="assets/images/casualhoodie.jpg" class="card-img-top" alt="Casual Hoodie">
+        <div class="card-body text-center">
+          <h5 class="card-title">Casual Hoodie</h5>
+          <p class="card-text">Comfortable hoodie for everyday casual wear.</p>
+          <p class="text-danger">KSh 3,200</p>
+          <button class="btn btn-primary add-to-cart" data-id="2" data-name="Casual Hoodie" data-price="3200">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="col-md-4 mb-4 product-item">
+      <div class="card">
+        <img src="assets/images/blazer2.jpg" class="card-img-top" alt="School Blazer">
+        <div class="card-body text-center">
+          <h5 class="card-title">School Blazer</h5>
+          <p class="card-text">Smart and durable blazer for school events and daily wear.</p>
+          <p class="text-danger">KSh 3,800</p>
+          <button class="btn btn-primary add-to-cart" data-id="3" data-name="School Blazer" data-price="3800">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="col-md-4 mb-4 product-item">
+      <div class="card">
+        <img src="assets/images/mensuit.jpg" class="card-img-top" alt="Classic Men's Suit">
+        <div class="card-body text-center">
+          <h5 class="card-title">Classic Men's Suit</h5>
+          <p class="card-text">Elegant and stylish suit, perfect for formal events.</p>
+          <p class="text-danger">KSh 7,500</p>
+          <button class="btn btn-primary add-to-cart" data-id="4" data-name="Classic Men's Suit" data-price="7500">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="col-md-4 mb-4 product-item">
+      <div class="card">
+        <img src="assets/images/menpolo.jpg" class="card-img-top" alt="Men's Polo Shirt">
+        <div class="card-body text-center">
+          <h5 class="card-title">Polo Shirt</h5>
+          <p class="card-text">Trendy and durable polo shirt for a bold look.</p>
+          <p class="text-danger">KSh 800</p>
+          <button class="btn btn-primary add-to-cart" data-id="5" data-name="Polo Shirt" data-price="800">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="col-md-4 mb-4 product-item">
+      <div class="card">
+        <img src="assets/images/african.jpg" class="card-img-top" alt="African Tshirt">
+        <div class="card-body text-center">
+          <h5 class="card-title">African Tshirt</h5>
+          <p class="card-text">Well-designed African t-shirts for both genders.</p>
+          <p class="text-danger">KSh 500</p>
+          <button class="btn btn-primary add-to-cart" data-id="6" data-name="African Tshirt" data-price="500">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart View -->
+  <div id="cartView" class="mt-5">
+    <h3>Your Cart</h3>
+    <ul id="cartItems" class="list-group mb-3"></ul>
+    <p><b>Total: </b><span id="cartTotal">KSh 0</span></p>
+    <button class="btn btn-success" onclick="checkout()">Checkout</button>
+  </div>
+</div>
+
+<script>
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  function updateCartView() {
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      total += item.price * item.quantity;
+      cartItems.innerHTML += `
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          ${item.name} (x${item.quantity})
+          <span>KSh ${item.price * item.quantity}</span>
+          <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button>
+        </li>`;
+    });
+
+    cartTotal.textContent = `KSh ${total}`;
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  document.querySelectorAll('.add-to-cart').forEach((button) => {
+    button.addEventListener('click', (e) => {
+      const id = e.target.getAttribute('data-id');
+      const name = e.target.getAttribute('data-name');
+      const price = parseInt(e.target.getAttribute('data-price'), 10);
+
+      const existingItem = cart.find((item) => item.id === id);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ id, name, price, quantity: 1 });
+      }
+
+      updateCartView();
+    });
+  });
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartView();
+  }
+
+  function checkout() {
+    if (cart.length === 0) {
+      alert('Your cart is empty.');
+      return;
+    }
+    alert('Checkout successful!');
+    localStorage.removeItem('cart');
+    cart.length = 0;
+    updateCartView();
+  }
+
+  updateCartView();
+</script>
